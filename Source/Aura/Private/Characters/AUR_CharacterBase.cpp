@@ -14,6 +14,12 @@ AAUR_CharacterBase::AAUR_CharacterBase()
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+UAbilitySystemComponent* AAUR_CharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

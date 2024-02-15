@@ -3,6 +3,8 @@
 
 #include "Characters/AUR_Enemy.h"
 
+#include "AUR_AttributeSet.h"
+#include "AbilitySystem/AUR_AbilitySystemComponent.h"
 #include "Aura/Aura.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -10,6 +12,11 @@ AAUR_Enemy::AAUR_Enemy()
 {
 	bIsHighlighted = false;
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	
+	AbilitySystemComponent = CreateDefaultSubobject<UAUR_AbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent->SetIsReplicated(true);
+
+	AttributeSet = CreateDefaultSubobject<UAUR_AttributeSet>("AttributeSet");
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
