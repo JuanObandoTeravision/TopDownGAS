@@ -33,8 +33,7 @@ public:
 #pragma endregion Possesion
 
 #pragma region Core
-
-	UFUNCTION()
+	
 	virtual void OnRep_PlayerState() override;
 
 #pragma endregion Core
