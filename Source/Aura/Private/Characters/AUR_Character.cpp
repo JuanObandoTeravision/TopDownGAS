@@ -3,7 +3,10 @@
 
 #include "Characters/AUR_Character.h"
 
+#include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Net/UnrealNetwork.h"
+#include "Player/AUR_PlayerState.h"
 
 AAUR_Character::AAUR_Character()
 {
@@ -16,3 +19,41 @@ AAUR_Character::AAUR_Character()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void AAUR_Character::BeginPlay()
+{
+	Super::BeginPlay();
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void AAUR_Character::InitAbilityActorInfo()
+{
+	if(AAUR_PlayerState* PlayerStateRef = Cast<AAUR_PlayerState>(GetPlayerState()))
+	{
+		AbilitySystemComponent = PlayerStateRef->GetAbilitySystemComponent();
+		AttributeSet = PlayerStateRef->GetAttributeSet();
+		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateRef, this);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void AAUR_Character::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	//PossessedBy only occurs on server
+	InitAbilityActorInfo();
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void AAUR_Character::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+	//OnRep is called only on client
+	InitAbilityActorInfo();
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
