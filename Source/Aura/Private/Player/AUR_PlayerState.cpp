@@ -14,6 +14,7 @@ AAUR_PlayerState::AAUR_PlayerState()
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	AttributeSet = CreateDefaultSubobject<UAUR_AttributeSet>("AttributeSet");
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 }
 
 UAbilitySystemComponent* AAUR_PlayerState::GetAbilitySystemComponent() const
