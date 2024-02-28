@@ -3,12 +3,31 @@
 
 #include "UI/HUD/AUR_HUD.h"
 #include "Blueprint/UserWidget.h"
+#include "UI/WidgetController/AUR_OverlayWidgetController.h"
 #include "UI/Widgets/AUR_UserWidget.h"
 
-void AAUR_HUD::BeginPlay()
+UAUR_OverlayWidgetController* AAUR_HUD::GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams)
 {
-	Super::BeginPlay();
+	if (OverlayWidgetController == nullptr)
+	{
+		OverlayWidgetController = NewObject<UAUR_OverlayWidgetController>(this, OverlayWidgetControllerClass);
+		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+	}
+	
+	return OverlayWidgetController;
+}
+
+void AAUR_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
+{
+	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_AuraHUD"));
+	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
 
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
+
+	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
+
+	//Both tell the widget who's its controller and create the controller, if needed. 
+	OverlayWidget->SetWidgetController(GetOverlayWidgetController(WidgetControllerParams));
+
 	Widget->AddToViewport();
 }

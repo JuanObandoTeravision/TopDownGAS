@@ -6,7 +6,9 @@
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Net/UnrealNetwork.h"
+#include "Player/AUR_PlayerController.h"
 #include "Player/AUR_PlayerState.h"
+#include "UI/HUD/AUR_HUD.h"
 
 AAUR_Character::AAUR_Character()
 {
@@ -34,6 +36,15 @@ void AAUR_Character::InitAbilityActorInfo()
 		AbilitySystemComponent = PlayerStateRef->GetAbilitySystemComponent();
 		AttributeSet = PlayerStateRef->GetAttributeSet();
 		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateRef, this);
+	}
+	
+	//We check if player controller is valid, as clients only have their own player controller as valid.
+	if(AAUR_PlayerController* PlayerController = Cast<AAUR_PlayerController>(GetController()))
+	{
+		if(AAUR_HUD* PlayerHUD = Cast<AAUR_HUD>(PlayerController->GetHUD()))
+		{
+			PlayerHUD->InitOverlay(PlayerController, GetPlayerState(), AbilitySystemComponent, AttributeSet);
+		}
 	}
 }
 
