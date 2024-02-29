@@ -6,5 +6,5 @@
 void UAUR_UserWidget::SetWidgetController(UObject* InWidgetController)
 {
 	WidgetController = InWidgetController;
-	BP_WidgetControllerSet();
+	BP_OnWidgetControllerSet();
 }

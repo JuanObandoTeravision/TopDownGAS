@@ -23,11 +23,25 @@ void AAUR_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class uninitialized, please fill out BP_AuraHUD"));
 
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
+	if(!Widget)
+	{
+		return;
+	}
 
+	OverlayWidget = Cast<UAUR_UserWidget>(Widget);
+
+	if(!OverlayWidget)
+	{
+		return;
+	}
+	
 	const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
 
 	//Both tell the widget who's its controller and create the controller, if needed. 
 	OverlayWidget->SetWidgetController(GetOverlayWidgetController(WidgetControllerParams));
 
+	//We broadcast initial values after the overlay widget controller is set in the function above
+	OverlayWidgetController->BroadcastInitialValues();
+	
 	Widget->AddToViewport();
 }
