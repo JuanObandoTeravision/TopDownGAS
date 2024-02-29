@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AUR_AttributeSet.h"
 #include "UI/WidgetController/AUR_WidgetController.h"
 #include "AUR_OverlayWidgetController.generated.h"
 
@@ -19,11 +20,18 @@ class AURA_API UAUR_OverlayWidgetController : public UAUR_WidgetController
 
 public:
 	virtual void BroadcastInitialValues() override;
+	virtual void BindCallbacksToDependencies() override;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnHealtChangedSignature OnHealthChangedDelegate;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnMaxHealtChangedSignature OnMaxHealthChangedDelegate;
+
+protected:
 	
+	void OnHealthChanged(const FOnAttributeChangeData& Data) const;
+
+
+	void OnMaxHealthChanged(const FOnAttributeChangeData& Data) const;
 };

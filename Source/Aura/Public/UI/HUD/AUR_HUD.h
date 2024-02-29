@@ -19,7 +19,8 @@ class AURA_API AAUR_HUD : public AHUD
 	GENERATED_BODY()
 
 public:
-	
+
+	//Works like a singleton, meaning that if there is no overlay widget controller already set, it creates it firts
 	UAUR_OverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
 
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);

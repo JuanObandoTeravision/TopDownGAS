@@ -15,3 +15,7 @@ void UAUR_WidgetController::BroadcastInitialValues()
 {
 	
 }
+
+void UAUR_WidgetController::BindCallbacksToDependencies()
+{
+}

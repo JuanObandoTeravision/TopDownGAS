@@ -12,6 +12,7 @@ UAUR_OverlayWidgetController* AAUR_HUD::GetOverlayWidgetController(const FWidget
 	{
 		OverlayWidgetController = NewObject<UAUR_OverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+		OverlayWidgetController->BindCallbacksToDependencies();
 	}
 	
 	return OverlayWidgetController;
