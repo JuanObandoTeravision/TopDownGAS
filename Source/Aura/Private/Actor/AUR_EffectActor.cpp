@@ -11,7 +11,11 @@
 AAUR_EffectActor::AAUR_EffectActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	
+	bShouldDestroyOnEffectRemoval = false;
+	InstantEffectApplicationPolicy = EAUR_EffectApplicationPolicy::DoNotApply;
+	DurationEffectApplicationPolicy = EAUR_EffectApplicationPolicy::DoNotApply;
+	InfiniteEffectApplicationPolicy = EAUR_EffectApplicationPolicy::DoNotApply;
+	InfiniteEffectRemovalPolicy = EAUR_EffectRemovalPolicy::RemoveOnEndOverlap;
 }
 
 void AAUR_EffectActor::BeginPlay()
@@ -44,5 +48,29 @@ void AAUR_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	 * We de-reference the tshareptr because the function receives a FGameplayEffectSpec by reference, not the handle. The handle contains a ptr to the spec
 	 */
 	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
+}
+
+void AAUR_EffectActor::OnOverlap(AActor* TargetActor)
+{
+	if (InstantEffectApplicationPolicy == EAUR_EffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
+	}
+	if (DurationEffectApplicationPolicy == EAUR_EffectApplicationPolicy::ApplyOnOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
+	}
+}
+
+void AAUR_EffectActor::OnEndOverlap(AActor* TargetActor)
+{
+	if (InstantEffectApplicationPolicy == EAUR_EffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, InstantGameplayEffectClass);
+	}
+	if (DurationEffectApplicationPolicy == EAUR_EffectApplicationPolicy::ApplyOnEndOverlap)
+	{
+		ApplyEffectToTarget(TargetActor, DurationGameplayEffectClass);
+	}
 }
 
