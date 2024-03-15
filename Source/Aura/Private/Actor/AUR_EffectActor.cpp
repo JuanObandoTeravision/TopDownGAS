@@ -46,7 +46,7 @@ void AAUR_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	 * Remember, a spec is just a optimized version of a gameplay effect. A spec handle  will contain a TSharedPtr to the spec itself. It needs the context
 	 * to knowledge of important information of the spec. You can also specify the spec level.
 	 */
-	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, 1.f, EffectContextHandle);
+	const FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffectClass, ActorLevel, EffectContextHandle);
 
 	/**
 	 * We de-reference the tshareptr because the function receives a FGameplayEffectSpec by reference, not the handle. The handle contains a ptr to the spec
