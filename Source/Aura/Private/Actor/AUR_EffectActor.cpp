@@ -17,11 +17,13 @@ AAUR_EffectActor::AAUR_EffectActor()
 	InfiniteEffectApplicationPolicy = EAUR_EffectApplicationPolicy::DoNotApply;
 	InfiniteEffectRemovalPolicy = EAUR_EffectRemovalPolicy::RemoveOnEndOverlap;
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void AAUR_EffectActor::BeginPlay()
 {
 	Super::BeginPlay();
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void AAUR_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
@@ -58,6 +60,7 @@ void AAUR_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 		ActiveEffectHandles.Add(ActiveEffectHandle, TargetASC);
 	}
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void AAUR_EffectActor::OnOverlap(AActor* TargetActor)
 {
@@ -74,6 +77,7 @@ void AAUR_EffectActor::OnOverlap(AActor* TargetActor)
 		ApplyEffectToTarget(TargetActor, InfiniteGameplayEffectClass);
 	}
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void AAUR_EffectActor::OnEndOverlap(AActor* TargetActor)
 {
@@ -114,4 +118,5 @@ void AAUR_EffectActor::OnEndOverlap(AActor* TargetActor)
 		}
 	}
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
