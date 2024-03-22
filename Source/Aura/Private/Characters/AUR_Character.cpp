@@ -4,6 +4,7 @@
 #include "Characters/AUR_Character.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AUR_AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Net/UnrealNetwork.h"
 #include "Player/AUR_PlayerController.h"
@@ -36,6 +37,7 @@ void AAUR_Character::InitAbilityActorInfo()
 		AbilitySystemComponent = PlayerStateRef->GetAbilitySystemComponent();
 		AttributeSet = PlayerStateRef->GetAttributeSet();
 		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateRef, this);
+		Cast<UAUR_AbilitySystemComponent>(AbilitySystemComponent)->OnAbilityActorInfoSet();
 	}
 	
 	//We check if player controller is valid, as clients only have their own player controller as valid.
@@ -53,8 +55,6 @@ void AAUR_Character::InitAbilityActorInfo()
 void AAUR_Character::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
-	//PossessedBy only occurs on server
 	InitAbilityActorInfo();
 }
 
