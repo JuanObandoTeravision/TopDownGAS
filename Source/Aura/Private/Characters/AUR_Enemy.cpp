@@ -23,7 +23,6 @@ AAUR_Enemy::AAUR_Enemy()
 void AAUR_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -43,6 +42,13 @@ void AAUR_Enemy::UnHighlightActor()
 	bIsHighlighted = false;
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void AAUR_Enemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UAUR_AbilitySystemComponent>(AbilitySystemComponent)->OnAbilityActorInfoSet();
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

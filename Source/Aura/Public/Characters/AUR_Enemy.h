@@ -37,5 +37,8 @@ public:
 	uint8 bIsHighlighted : 1;
 
 #pragma endregion Enemy Interface
+
+public:
+	virtual void InitAbilityActorInfo() override;
 	
 };

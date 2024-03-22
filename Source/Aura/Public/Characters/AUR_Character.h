@@ -22,7 +22,7 @@ public:
 
 #pragma region Ability System component
 
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 
 #pragma endregion Ability System component
 
