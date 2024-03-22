@@ -38,7 +38,7 @@ protected:
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
-
+	
 	virtual void InitAbilityActorInfo();
 
 #pragma endregion 

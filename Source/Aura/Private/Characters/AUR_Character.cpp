@@ -34,10 +34,10 @@ void AAUR_Character::InitAbilityActorInfo()
 {
 	if(AAUR_PlayerState* PlayerStateRef = Cast<AAUR_PlayerState>(GetPlayerState()))
 	{
+		PlayerStateRef->GetAbilitySystemComponent()->InitAbilityActorInfo(PlayerStateRef, this);
+		Cast<UAUR_AbilitySystemComponent>(PlayerStateRef->GetAbilitySystemComponent())->OnAbilityActorInfoSet();
 		AbilitySystemComponent = PlayerStateRef->GetAbilitySystemComponent();
 		AttributeSet = PlayerStateRef->GetAttributeSet();
-		AbilitySystemComponent->InitAbilityActorInfo(PlayerStateRef, this);
-		Cast<UAUR_AbilitySystemComponent>(AbilitySystemComponent)->OnAbilityActorInfoSet();
 	}
 	
 	//We check if player controller is valid, as clients only have their own player controller as valid.
