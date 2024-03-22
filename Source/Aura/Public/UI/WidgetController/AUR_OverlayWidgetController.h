@@ -15,6 +15,27 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, N
 /**
  * 
  */
+
+class UAUR_UserWidget;
+
+USTRUCT(BlueprintType)
+struct FAUR_UIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag MessageTag = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText Message = FText();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UAUR_UserWidget> MessageWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* Image = nullptr;
+};
+
 UCLASS(Blueprintable, BlueprintType)
 class AURA_API UAUR_OverlayWidgetController : public UAUR_WidgetController
 {
@@ -37,6 +58,9 @@ public:
 	FOnMaxManaChangedSignature OnMaxManaChangedDelegate;
 
 protected:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
+	TObjectPtr<UDataTable> MessageWidgetDataTable;
 	
 	void OnHealthChanged(const FOnAttributeChangeData& Data) const;
 
