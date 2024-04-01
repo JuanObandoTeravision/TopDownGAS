@@ -51,7 +51,6 @@ void AAUR_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	/**
 	 * We de-reference the tshareptr because the function receives a FGameplayEffectSpec by reference, not the handle. The handle contains a ptr to the spec
 	 */
-	TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 	const FActiveGameplayEffectHandle ActiveEffectHandle = TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 
 	const bool bIsInfinite =  EffectSpecHandle.Data.Get()->Def.Get()->DurationPolicy == EGameplayEffectDurationType::Infinite;

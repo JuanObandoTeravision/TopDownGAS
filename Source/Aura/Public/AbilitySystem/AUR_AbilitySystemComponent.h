@@ -17,6 +17,9 @@ class AURA_API UAUR_AbilitySystemComponent : public UAbilitySystemComponent
 	GENERATED_BODY()
 
 public:
+
+    bool bHasInfoBeenSet = false;
+    
 	void OnAbilityActorInfoSet();
 	
 	FEffectAssetTagsSignature EffectAssetTagsDelegate;
