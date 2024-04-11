@@ -43,6 +43,8 @@ void AAUR_CharacterBase::InitializePrimaryAttributes() const
 void AAUR_CharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	
 	
 }
 

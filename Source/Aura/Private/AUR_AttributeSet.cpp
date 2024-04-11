@@ -32,6 +32,20 @@ void UAUR_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Mana, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+	
+	// Secondary Attributes
+
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Armor, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, CriticalHitChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, CriticalHitDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, CriticalHitResistance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);	
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);	
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);	
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -115,6 +129,55 @@ void UAUR_AttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) cons
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, Vigor, OldVigor);
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, Armor, OldArmor);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, ArmorPenetration, OldArmorPenetration);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, BlockChance, OldBlockChance);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, CriticalHitChance, OldCriticalHitChance);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, CriticalHitDamage, OldCriticalHitDamage);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, CriticalHitResistance, OldCriticalHitResistance);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, HealthRegeneration, OldHealthRegeneration);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, ManaRegeneration, OldManaRegeneration);
+}
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void UAUR_AttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FAUR_EffectProperties& EffectProperties) const
