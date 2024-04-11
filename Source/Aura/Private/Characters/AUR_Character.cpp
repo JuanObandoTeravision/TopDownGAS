@@ -48,6 +48,9 @@ void AAUR_Character::InitAbilityActorInfo()
 			PlayerHUD->InitOverlay(PlayerController, GetPlayerState(), AbilitySystemComponent, AttributeSet);
 		}
 	}
+
+	//this could be only initialized in server, as attributes are already being replicated
+	InitializePrimaryAttributes();
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

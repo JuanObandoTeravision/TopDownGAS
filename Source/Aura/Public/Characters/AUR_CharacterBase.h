@@ -9,7 +9,7 @@
 
 class UAbilitySystemComponent;
 class UAttributeSet;
-
+class UGameplayEffect;
 
 class USkeletalMeshComponent;
 UCLASS()
@@ -40,6 +40,11 @@ protected:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	
 	virtual void InitAbilityActorInfo();
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> InitializeDefaultPrimaryAttributesEffect;
+
+	void InitializePrimaryAttributes() const;
 
 #pragma endregion 
 };
