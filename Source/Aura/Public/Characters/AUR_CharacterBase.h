@@ -30,7 +30,7 @@ protected:
 
 #pragma region Ability System Interface
 	
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
 	UPROPERTY()

@@ -23,6 +23,11 @@ void UAUR_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Strength, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Resilience, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Vigor, COND_None, REPNOTIFY_Always);
+
 	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAUR_AttributeSet, Mana, COND_None, REPNOTIFY_Always);
@@ -85,6 +90,30 @@ void UAUR_AttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
 void UAUR_AttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, MaxMana, OldMaxMana);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, Strength, OldStrength);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, Intelligence, OldIntelligence);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResilience) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, Resilience, OldResilience);
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void UAUR_AttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UAUR_AttributeSet, Vigor, OldVigor);
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
