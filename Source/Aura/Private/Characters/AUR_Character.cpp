@@ -50,7 +50,7 @@ void AAUR_Character::InitAbilityActorInfo()
 	}
 
 	//this could be only initialized in server, as attributes are already being replicated
-	InitializePrimaryAttributes();
+	InitializeDefaultAttributes();
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

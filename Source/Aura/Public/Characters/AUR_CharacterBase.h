@@ -13,7 +13,7 @@ class UGameplayEffect;
 
 class USkeletalMeshComponent;
 UCLASS()
-class AURA_API AAUR_CharacterBase : public ACharacter, public IAbilitySystemInterface
+class AURA_API AAUR_CharacterBase : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -44,7 +44,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> InitializeDefaultPrimaryAttributesEffect;
 
-	void InitializePrimaryAttributes() const;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> InitializeDefaultSecondaryAttributesEffect;
+	
+	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
+	void InitializeDefaultAttributes() const;
 
 #pragma endregion 
 };

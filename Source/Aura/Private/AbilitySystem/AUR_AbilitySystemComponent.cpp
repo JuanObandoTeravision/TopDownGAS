@@ -19,11 +19,8 @@ void UAUR_AbilitySystemComponent::OnAbilityActorInfoSet()
 
 void UAUR_AbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
-	//TODO THE DELEGATE IS CALLING TWICE, FOR SOME REASON.
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);
-
-	GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Blue, "effwect");
 	
 	EffectAssetTagsDelegate.Broadcast(TagContainer);
 }
