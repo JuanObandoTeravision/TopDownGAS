@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "../../../../../../../Games/Epic Games/UE_5.2/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Public/AbilitySystemInterface.h"
+#include "Interaction/AUR_CombatInterface.h"
 #include "GameFramework/Character.h"
 #include "AUR_CharacterBase.generated.h"
 
@@ -13,7 +14,7 @@ class UGameplayEffect;
 
 class USkeletalMeshComponent;
 UCLASS()
-class AURA_API AAUR_CharacterBase : public ACharacter
+class AURA_API AAUR_CharacterBase : public ACharacter, public IAbilitySystemInterface, public IAUR_CombatInterface
 {
 	GENERATED_BODY()
 

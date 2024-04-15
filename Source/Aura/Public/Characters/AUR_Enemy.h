@@ -38,6 +38,16 @@ public:
 
 #pragma endregion Enemy Interface
 
+#pragma region CombatInterface
+public:
+	/** Combat Interface */
+	virtual int32 GetPlayerLevel() override;
+	/** end Combat Interface */
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
+	int32 Level = 1;
+#pragma endregion CombatInterace
+
 public:
 	virtual void InitAbilityActorInfo() override;
 	

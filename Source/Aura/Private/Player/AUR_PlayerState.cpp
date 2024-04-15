@@ -5,6 +5,7 @@
 
 #include "AUR_AttributeSet.h"
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
+#include "Net/UnrealNetwork.h"
 
 AAUR_PlayerState::AAUR_PlayerState()
 {
@@ -17,7 +18,18 @@ AAUR_PlayerState::AAUR_PlayerState()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 }
 
+void AAUR_PlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AAUR_PlayerState, Level);Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+}
+
 UAbilitySystemComponent* AAUR_PlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void AAUR_PlayerState::OnRep_Level(int32 OldLevel)
+{
 }

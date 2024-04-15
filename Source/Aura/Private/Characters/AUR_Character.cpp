@@ -69,5 +69,13 @@ void AAUR_Character::OnRep_PlayerState()
 	//OnRep is called only on client
 	InitAbilityActorInfo();
 }
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+int32 AAUR_Character::GetPlayerLevel()
+{
+	const AAUR_PlayerState* AuraPlayerState = GetPlayerState<AAUR_PlayerState>();
+	check(AuraPlayerState);
+	return AuraPlayerState->GetPlayerLevel();
+}
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

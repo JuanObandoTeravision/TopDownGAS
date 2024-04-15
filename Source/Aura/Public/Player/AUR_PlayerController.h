@@ -40,7 +40,7 @@ private:
 
 	
 	void CursorTrace();
-	TObjectPtr<IAUR_EnemyInterface> LastHoveredActor;
-	TObjectPtr<IAUR_EnemyInterface> CurrentHoveredActor;
+	IAUR_EnemyInterface* LastHoveredActor;
+	IAUR_EnemyInterface* CurrentHoveredActor;
 	
 };
