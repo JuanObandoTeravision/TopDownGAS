@@ -26,6 +26,7 @@ UAbilitySystemComponent* AAUR_CharacterBase::GetAbilitySystemComponent() const
 
 void AAUR_CharacterBase::InitAbilityActorInfo()
 {
+	
 }//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

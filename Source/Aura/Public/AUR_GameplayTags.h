@@ -3,15 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 
 
 struct FAUR_GameplayTags
 {
-public:
- static const FAUR_GameplayTags& Get() { return GameplayTags;}
+ public:
+	static const FAUR_GameplayTags& Get() { return GameplayTags;}
  static void InitializeNativeGameplayTags();
-protected:
 
-private:
- static FAUR_GameplayTags GameplayTags;
+ FGameplayTag Attributes_Secondary_Armor;
+  
+ protected:
+
+ private:
+  static FAUR_GameplayTags GameplayTags;
 };

@@ -2,6 +2,8 @@
 
 
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
+
+#include "AUR_GameplayTags.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void UAUR_AbilitySystemComponent::OnAbilityActorInfoSet()
@@ -13,6 +15,14 @@ void UAUR_AbilitySystemComponent::OnAbilityActorInfoSet()
     
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAUR_AbilitySystemComponent::EffectApplied);
 	bHasInfoBeenSet = true;
+
+	const FAUR_GameplayTags& GameplayTags = FAUR_GameplayTags::Get();
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		10.f,
+		FColor::Orange,
+		FString::Printf(TEXT("Tag: %s"), *GameplayTags.Attributes_Secondary_Armor.ToString())
+		);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -23,6 +23,7 @@ AAUR_Enemy::AAUR_Enemy()
 void AAUR_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
+	InitAbilityActorInfo();
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,7 +56,10 @@ int32 AAUR_Enemy::GetPlayerLevel()
 void AAUR_Enemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
-	Cast<UAUR_AbilitySystemComponent>(AbilitySystemComponent)->OnAbilityActorInfoSet();
+	if(UAUR_AbilitySystemComponent* AUR_ASC = Cast<UAUR_AbilitySystemComponent>(AbilitySystemComponent))
+	{
+		AUR_ASC->OnAbilityActorInfoSet();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
