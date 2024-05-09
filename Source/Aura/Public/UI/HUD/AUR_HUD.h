@@ -11,6 +11,7 @@
  * 
  */
 
+class UAUR_AttributeMenuWC;
 class UAUR_OverlayWidgetController;
 class UAUR_UserWidget;
 UCLASS()
@@ -25,10 +26,18 @@ public:
 
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
+	UAUR_AttributeMenuWC* GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
+
 	UPROPERTY()
 	TObjectPtr<UAUR_UserWidget>  OverlayWidget;
 
 private:
+
+	UPROPERTY()
+	TObjectPtr<UAUR_AttributeMenuWC> AttributeMenuWidgetController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UAUR_AttributeMenuWC> AttributeMenuWidgetControllerClass;
 
 	//This is the actual widget class that works as the main HUD for the game
 	UPROPERTY(EditAnywhere)

@@ -3,6 +3,7 @@
 
 #include "UI/HUD/AUR_HUD.h"
 #include "Blueprint/UserWidget.h"
+#include "UI/WidgetController/AUR_AttributeMenuWC.h"
 #include "UI/WidgetController/AUR_OverlayWidgetController.h"
 #include "UI/Widgets/AUR_UserWidget.h"
 
@@ -45,4 +46,15 @@ void AAUR_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	OverlayWidgetController->BroadcastInitialValues();
 	
 	Widget->AddToViewport();
+}
+
+UAUR_AttributeMenuWC* AAUR_HUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+	if (AttributeMenuWidgetController == nullptr)
+	{
+		AttributeMenuWidgetController = NewObject<UAUR_AttributeMenuWC>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
+		AttributeMenuWidgetController->BindCallbacksToDependencies();
+	}
+	return AttributeMenuWidgetController;
 }
