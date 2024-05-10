@@ -9,7 +9,17 @@
 
 void UAUR_AttributeMenuWC::BindCallbacksToDependencies()
 {
-	
+	UAUR_AttributeSet* AS = CastChecked<UAUR_AttributeSet>(AttributeSet);
+	check(AttributeInfo);
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+		[this, Pair](const FOnAttributeChangeData& Data)
+		{
+			BroadcastAttributeInfo(Pair.Key, Pair.Value());
+		}
+	);
+	}
 }
 
 void UAUR_AttributeMenuWC::BroadcastInitialValues()
@@ -17,8 +27,16 @@ void UAUR_AttributeMenuWC::BroadcastInitialValues()
 	UAUR_AttributeSet* AS = CastChecked<UAUR_AttributeSet>(AttributeSet);
 
 	check(AttributeInfo);
+	
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		BroadcastAttributeInfo(Pair.Key, Pair.Value());
+	}
+}
 
-	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(FAUR_GameplayTags::Get().Attributes_Primary_Strength);
-	Info.AttributeValue = AS->GetStrength();
+void UAUR_AttributeMenuWC::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
+{
+	FAuraAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
 	AttributeInfoDelegate.Broadcast(Info);
 }

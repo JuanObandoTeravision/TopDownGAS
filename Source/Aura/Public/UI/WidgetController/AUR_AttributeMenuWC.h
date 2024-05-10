@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "UI/WidgetController/AUR_WidgetController.h"
+#include "AUR_AttributeSet.h"
+#include "AUR_GameplayTags.h"
+#include "AbilitySystem/Data/AUR_AttributeInfo.h"
 #include "AUR_AttributeMenuWC.generated.h"
 
 class UAttributeInfo;
@@ -30,5 +33,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UAUR_AttributeInfo> AttributeInfo;
-	
+private:
+
+	void BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const;
 };
