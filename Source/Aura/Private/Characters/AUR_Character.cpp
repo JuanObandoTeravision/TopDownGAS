@@ -59,6 +59,7 @@ void AAUR_Character::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
