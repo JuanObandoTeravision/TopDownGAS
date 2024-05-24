@@ -4,9 +4,11 @@
 #include "Player/AUR_PlayerController.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
+#include "AUR_GameplayTags.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
 #include "Input/AUR_InputComponent.h"
 #include "Interaction/AUR_EnemyInterface.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,6 +16,14 @@
 AAUR_PlayerController::AAUR_PlayerController()
 {
 	bReplicates = true;
+	CachedDestination = FVector::ZeroVector;
+	FollowTime = 0.f;
+	ShortPressThreshold = 0.5f;
+	bAutoRunning = false;
+	bTargeting = false;
+	AutoRunAcceptanceRadius = 50.f;
+
+	Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
 
 void AAUR_PlayerController::PlayerTick(float DeltaTime)
@@ -134,21 +144,52 @@ void AAUR_PlayerController::CursorTrace()
 
 void AAUR_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Red, FString::Printf(TEXT("Pressed, %s"), *InputTag.ToString()));
+	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Red, FString::Printf(TEXT("Pressed, %s"), *InputTag.ToString()));
+
+	if (InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB))
+	{
+		bTargeting = CurrentHoveredActor ? true : false;
+		bAutoRunning = false;
+	}
 }
 
 void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Blue, FString::Printf(TEXT("Released, %s"), *InputTag.ToString()));
+	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Blue, FString::Printf(TEXT("Released, %s"), *InputTag.ToString()));
 	if (GetASC() == nullptr) return;
 	GetASC()->AbilityInputTagReleased(InputTag);
 }
 
 void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, FString::Printf(TEXT("Held, %s"), *InputTag.ToString()));
+	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, FString::Printf(TEXT("Held, %s"), *InputTag.ToString()));
 	if (GetASC() == nullptr) return;
-	GetASC()->AbilityInputTagHeld(InputTag);
+	
+	if (!InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) || InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) && bTargeting)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+		return;
+	}
+
+	if(InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB))
+	{
+		FollowTime += GetWorld()->GetDeltaSeconds();
+
+		FHitResult Hit;
+		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		{
+			CachedDestination = Hit.ImpactPoint;
+		}
+
+		if (APawn* ControlledPawn = GetPawn())
+		{
+			const FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
+			ControlledPawn->AddMovementInput(WorldDirection);
+		}
+	}
 }
 
 UAUR_AbilitySystemComponent* AAUR_PlayerController::GetASC()

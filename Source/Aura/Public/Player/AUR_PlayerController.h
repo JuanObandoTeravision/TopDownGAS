@@ -13,6 +13,7 @@ class UAUR_InputConfig;
 class IAUR_EnemyInterface;
 class UInputMappingContext;
 class UInputAction;
+class USplineComponent;
 struct FInputActionValue;
 
 /**
@@ -59,5 +60,19 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	TObjectPtr<UAUR_InputConfig> InputConfig;
+
+	//Move with mouse cursor behavior
+
+	FVector CachedDestination;
+	float FollowTime;
+	float ShortPressThreshold;
+	bool bAutoRunning;
+	bool bTargeting;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AutoRunAcceptanceRadius;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> Spline;
 	
 };
