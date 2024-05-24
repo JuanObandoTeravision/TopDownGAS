@@ -8,6 +8,7 @@
 #include "AUR_PlayerController.generated.h"
 
 
+class UAUR_AbilitySystemComponent;
 class UAUR_InputConfig;
 class IAUR_EnemyInterface;
 class UInputMappingContext;
@@ -49,6 +50,12 @@ private:
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
+	
+	UPROPERTY()
+	TObjectPtr<UAUR_AbilitySystemComponent> AuraAbilitySystemComponent;
+
+	UAUR_AbilitySystemComponent* GetASC();
+
 
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	TObjectPtr<UAUR_InputConfig> InputConfig;

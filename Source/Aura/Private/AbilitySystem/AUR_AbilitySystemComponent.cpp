@@ -4,6 +4,7 @@
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
 
 #include "AUR_GameplayTags.h"
+#include "AbilitySystem/GameplayAbilities/AUR_GameplayAbility.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void UAUR_AbilitySystemComponent::OnAbilityActorInfoSet()
@@ -32,10 +33,47 @@ void UAUR_AbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf
 	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		//GiveAbility(AbilitySpec);
-		GiveAbilityAndActivateOnce(AbilitySpec);
+
+		if (const UAUR_GameplayAbility* AuraAbility = Cast<UAUR_GameplayAbility>(AbilitySpec.Ability))
+		{
+			AbilitySpec.DynamicAbilityTags.AddTag(AuraAbility->StartupInputTag);
+			GiveAbility(AbilitySpec);
+		}
 	}
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+void UAUR_AbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
+{
+	if (!InputTag.IsValid()) return;
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			AbilitySpecInputPressed(AbilitySpec);
+			if (!AbilitySpec.IsActive())
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+void UAUR_AbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& InputTag)
+{
+	if (!InputTag.IsValid()) return;
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			AbilitySpecInputReleased(AbilitySpec);
+		}
+	}
+}
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 

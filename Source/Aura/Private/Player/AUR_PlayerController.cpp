@@ -3,8 +3,10 @@
 
 #include "Player/AUR_PlayerController.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/AUR_AbilitySystemComponent.h"
 #include "Input/AUR_InputComponent.h"
 #include "Interaction/AUR_EnemyInterface.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -138,11 +140,24 @@ void AAUR_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Blue, FString::Printf(TEXT("Released, %s"), *InputTag.ToString()));
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagReleased(InputTag);
 }
 
 void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, FString::Printf(TEXT("Held, %s"), *InputTag.ToString()));
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagHeld(InputTag);
+}
+
+UAUR_AbilitySystemComponent* AAUR_PlayerController::GetASC()
+{
+	if (AuraAbilitySystemComponent == nullptr)
+	{
+		AuraAbilitySystemComponent = Cast<UAUR_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return AuraAbilitySystemComponent;
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
