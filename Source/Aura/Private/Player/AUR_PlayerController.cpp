@@ -5,6 +5,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Input/AUR_InputComponent.h"
 #include "Interaction/AUR_EnemyInterface.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -47,10 +48,10 @@ void AAUR_PlayerController::BeginPlay()
 void AAUR_PlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
-
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAUR_PlayerController::Move);
+	
+	UAUR_InputComponent* AuraInputComponent = CastChecked<UAUR_InputComponent>(InputComponent);
+	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAUR_PlayerController::Move);
+	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -127,6 +128,21 @@ void AAUR_PlayerController::CursorTrace()
 			}
 			}
 		}
+}
+
+void AAUR_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Red, FString::Printf(TEXT("Pressed, %s"), *InputTag.ToString()));
+}
+
+void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Blue, FString::Printf(TEXT("Released, %s"), *InputTag.ToString()));
+}
+
+void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, FString::Printf(TEXT("Held, %s"), *InputTag.ToString()));
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
