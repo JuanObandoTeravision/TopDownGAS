@@ -52,6 +52,8 @@ private:
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
 	
+	void AutoRun();
+	
 	UPROPERTY()
 	TObjectPtr<UAUR_AbilitySystemComponent> AuraAbilitySystemComponent;
 
@@ -63,6 +65,7 @@ private:
 
 	//Move with mouse cursor behavior
 
+	//Where we click on the mouse to go. If we click on a place without navmesh, this becomes the last generated path point to go to said location
 	FVector CachedDestination;
 	float FollowTime;
 	float ShortPressThreshold;
