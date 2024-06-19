@@ -109,7 +109,6 @@ void AAUR_PlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AAUR_PlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
@@ -165,6 +164,7 @@ void AAUR_PlayerController::CursorTrace()
 		}
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void AAUR_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
 	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Red, FString::Printf(TEXT("Pressed, %s"), *InputTag.ToString()));
@@ -176,6 +176,7 @@ void AAUR_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Blue, FString::Printf(TEXT("Released, %s"), *InputTag.ToString()));
@@ -190,7 +191,7 @@ void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		return;
 	}
 	
-	APawn* ControlledPawn = GetPawn();
+	const APawn* ControlledPawn = GetPawn();
 	if (FollowTime <= ShortPressThreshold && ControlledPawn)
 	{
 		if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination))
@@ -199,7 +200,7 @@ void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 			for (const FVector& PointLoc : NavPath->PathPoints)
 			{
 				Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-				DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+				//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
 			}
 			bAutoRunning = true;
 		}
@@ -208,6 +209,7 @@ void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 	bTargeting = false;
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, FString::Printf(TEXT("Held, %s"), *InputTag.ToString()));
@@ -226,10 +228,9 @@ void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	{
 		FollowTime += GetWorld()->GetDeltaSeconds();
 
-		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		if (CursorHit.bBlockingHit)
 		{
-			CachedDestination = Hit.ImpactPoint;
+			CachedDestination = CursorHit.ImpactPoint;
 		}
 
 		if (APawn* ControlledPawn = GetPawn())
@@ -240,6 +241,7 @@ void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	}
 }
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 UAUR_AbilitySystemComponent* AAUR_PlayerController::GetASC()
 {
 	if (AuraAbilitySystemComponent == nullptr)

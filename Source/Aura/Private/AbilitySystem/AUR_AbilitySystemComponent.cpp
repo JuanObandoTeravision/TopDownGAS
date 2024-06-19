@@ -14,7 +14,7 @@ void UAUR_AbilitySystemComponent::OnAbilityActorInfoSet()
 		return;
     }
     
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAUR_AbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UAUR_AbilitySystemComponent::Client_EffectApplied);
 	bHasInfoBeenSet = true;
 
 	const FAUR_GameplayTags& GameplayTags = FAUR_GameplayTags::Get();
@@ -77,7 +77,7 @@ void UAUR_AbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& In
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-void UAUR_AbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
+void UAUR_AbilitySystemComponent::Client_EffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);

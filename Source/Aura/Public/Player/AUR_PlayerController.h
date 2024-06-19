@@ -46,6 +46,7 @@ private:
 	void CursorTrace();
 	IAUR_EnemyInterface* LastHoveredActor;
 	IAUR_EnemyInterface* CurrentHoveredActor;
+	FHitResult CursorHit;
 
 	
 	void AbilityInputTagPressed(FGameplayTag InputTag);
