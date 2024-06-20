@@ -8,3 +8,8 @@ int32 IAUR_CombatInterface::GetPlayerLevel()
 {
 	return 0;
 }
+
+FVector IAUR_CombatInterface::GetCombatSocketLocation()
+{
+	return FVector();
+}

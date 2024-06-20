@@ -24,6 +24,8 @@ AAUR_Projectile::AAUR_Projectile()
 	ProjectileMovement->MaxSpeed = 550.f;
 	ProjectileMovement->ProjectileGravityScale = 0.f;
 
+	bReplicates = true;
+
 }
 
 // Called when the game starts or when spawned
