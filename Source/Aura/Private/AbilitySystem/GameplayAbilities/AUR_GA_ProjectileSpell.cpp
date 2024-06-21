@@ -1,4 +1,3 @@
-// Copyright Teravision Games
 
 
 #include "AbilitySystem/GameplayAbilities/AUR_GA_ProjectileSpell.h"

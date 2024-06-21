@@ -1,5 +1,3 @@
-// Copyright Teravision Games
-
 
 #include "Interaction/AUR_EnemyInterface.h"
 

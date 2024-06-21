@@ -1,4 +1,3 @@
-// Copyright Teravision Games
 
 
 #include "AUR_AssetManager.h"

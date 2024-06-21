@@ -1,5 +1,3 @@
-// Copyright Teravision Games
-
 
 #include "Input/AUR_InputConfig.h"
 

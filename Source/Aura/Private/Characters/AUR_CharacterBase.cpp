@@ -1,5 +1,3 @@
-// Copyright Teravision Games
-
 
 #include "Characters/AUR_CharacterBase.h"
 

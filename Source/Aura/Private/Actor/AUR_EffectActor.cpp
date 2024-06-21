@@ -1,5 +1,3 @@
-// Copyright Teravision Games
-
 
 #include "Actor/AUR_EffectActor.h"
 

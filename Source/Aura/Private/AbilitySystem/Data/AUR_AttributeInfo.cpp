@@ -1,4 +1,3 @@
-// Copyright Teravision Games
 
 
 #include "AbilitySystem/Data/AUR_AttributeInfo.h"

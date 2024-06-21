@@ -1,4 +1,3 @@
-// Copyright Teravision Games
 
 
 #include "Actor/AUR_Projectile.h"

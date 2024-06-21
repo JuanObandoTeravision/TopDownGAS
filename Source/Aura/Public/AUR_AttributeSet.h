@@ -1,4 +1,3 @@
-// Copyright Teravision Games
 
 #pragma once
 

@@ -1,4 +1,3 @@
-// Copyright Teravision Games
 
 
 #include "Interaction/AUR_CombatInterface.h"

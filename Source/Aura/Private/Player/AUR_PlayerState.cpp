@@ -1,5 +1,3 @@
-// Copyright Teravision Games
-
 
 #include "Player/AUR_PlayerState.h"
 
