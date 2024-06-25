@@ -12,14 +12,17 @@ void UAUR_GA_ProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle H
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
+}
+
+void UAUR_GA_ProjectileSpell::SpawnProjectile(const FGameplayAbilityActivationInfo ActivationInfo)
+{
 	const bool bIsServer = HasAuthority(&ActivationInfo);
 	if (!bIsServer)
 	{
 		return;
 	}
-	
-	IAUR_CombatInterface* CombatInterface = Cast<IAUR_CombatInterface>(GetAvatarActorFromActorInfo());
-	if (CombatInterface)
+
+	if (IAUR_CombatInterface* CombatInterface = Cast<IAUR_CombatInterface>(GetAvatarActorFromActorInfo()))
 	{
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
 
