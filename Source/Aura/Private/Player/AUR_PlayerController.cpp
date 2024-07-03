@@ -84,6 +84,8 @@ void AAUR_PlayerController::SetupInputComponent()
 	
 	UAUR_InputComponent* AuraInputComponent = CastChecked<UAUR_InputComponent>(InputComponent);
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAUR_PlayerController::Move);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAUR_PlayerController::ShiftPressed);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &AAUR_PlayerController::ShiftReleased);
 	AuraInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -177,34 +179,38 @@ void AAUR_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void AAUR_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Blue, FString::Printf(TEXT("Released, %s"), *InputTag.ToString()));
-	if (GetASC() == nullptr) return;
 
-	if (!InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) || InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) && bTargeting)
+	if (!InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB))
 	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputTagReleased(InputTag);
-		}
+		if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
 		return;
 	}
-	
-	const APawn* ControlledPawn = GetPawn();
-	if (FollowTime <= ShortPressThreshold && ControlledPawn)
+
+	if (GetASC())
 	{
-		if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination))
-		{
-			Spline->ClearSplinePoints();
-			for (const FVector& PointLoc : NavPath->PathPoints)
-			{
-				Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-				//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
-			}
-			bAutoRunning = true;
-		}
+		GetASC()->AbilityInputTagReleased(InputTag);
 	}
-	FollowTime = 0.f;
-	bTargeting = false;
+	
+	if(!bTargeting && !bShiftKeyDown)
+	{
+		const APawn* ControlledPawn = GetPawn();
+		if (FollowTime <= ShortPressThreshold && ControlledPawn)
+		{
+			if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination))
+			{
+				Spline->ClearSplinePoints();
+				for (const FVector& PointLoc : NavPath->PathPoints)
+				{
+					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+					//DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+				}
+				bAutoRunning = true;
+			}
+		}
+		FollowTime = 0.f;
+		bTargeting = false;
+	}
+	
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -213,7 +219,7 @@ void AAUR_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	//GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, FString::Printf(TEXT("Held, %s"), *InputTag.ToString()));
 	if (GetASC() == nullptr) return;
 	
-	if (!InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) || InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) && bTargeting)
+	if (!InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) || InputTag.MatchesTagExact(FAUR_GameplayTags::Get().InputTag_LMB) && (bTargeting || bShiftKeyDown))
 	{
 		if (GetASC())
 		{

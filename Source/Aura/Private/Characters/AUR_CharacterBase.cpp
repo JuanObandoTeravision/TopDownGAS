@@ -3,6 +3,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
+#include "Components/CapsuleComponent.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -13,6 +14,9 @@ AAUR_CharacterBase::AAUR_CharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

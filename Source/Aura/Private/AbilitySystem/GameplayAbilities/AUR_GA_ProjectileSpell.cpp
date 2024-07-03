@@ -14,7 +14,7 @@ void UAUR_GA_ProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle H
 
 }
 
-void UAUR_GA_ProjectileSpell::SpawnProjectile(const FGameplayAbilityActivationInfo ActivationInfo)
+void UAUR_GA_ProjectileSpell::SpawnProjectile(const FGameplayAbilityActivationInfo ActivationInfo, const FVector& ProjectileTargetLocation)
 {
 	const bool bIsServer = HasAuthority(&ActivationInfo);
 	if (!bIsServer)
@@ -28,7 +28,9 @@ void UAUR_GA_ProjectileSpell::SpawnProjectile(const FGameplayAbilityActivationIn
 
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
-		//TODO: Set the Projectile Rotation
+		FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+		Rotation.Pitch = 0.f;
+		SpawnTransform.SetRotation(Rotation.Quaternion());
 
 		AAUR_Projectile* Projectile = GetWorld()->SpawnActorDeferred<AAUR_Projectile>(
 			ProjectileClass,
