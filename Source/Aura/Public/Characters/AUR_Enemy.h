@@ -4,8 +4,11 @@
 #include "CoreMinimal.h"
 #include "Interaction/AUR_EnemyInterface.h"
 #include "Characters/AUR_CharacterBase.h"
+#include "UI/WidgetController/AUR_OverlayWidgetController.h"
 #include "AUR_Enemy.generated.h"
 
+
+class UWidgetComponent;
 /**
  * 
  */
@@ -24,6 +27,13 @@ public:
 	virtual void BeginPlay() override;
 
 #pragma endregion ACharacter
+
+#pragma region Components
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBar;
+
+#pragma endregion Components
 
 #pragma region Enemy Interface
 
@@ -46,6 +56,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
 #pragma endregion CombatInterace
+
+#pragma region Attributes
+
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnMaxHealthChanged;
+
+
+
+#pragma endregion Attributes
 
 public:
 	virtual void InitAbilityActorInfo() override;

@@ -4,6 +4,8 @@
 #include "AUR_AttributeSet.h"
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
 #include "Aura/Aura.h"
+#include "Components/WidgetComponent.h"
+#include "UI/Widgets/AUR_UserWidget.h"
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 AAUR_Enemy::AAUR_Enemy()
@@ -15,6 +17,9 @@ AAUR_Enemy::AAUR_Enemy()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<UAUR_AttributeSet>("AttributeSet");
+
+	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBarWidgetComponent");
+	HealthBar->SetupAttachment(GetRootComponent());
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -22,6 +27,30 @@ void AAUR_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
 	InitAbilityActorInfo();
+	
+	if (UAUR_UserWidget* AuraUserWidget = Cast<UAUR_UserWidget>(HealthBar->GetUserWidgetObject()))
+	{
+		AuraUserWidget->SetWidgetController(this);
+	}
+
+	if (const UAUR_AttributeSet* AuraAS = Cast<UAUR_AttributeSet>(AttributeSet))
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(AuraAS->GetMaxHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnMaxHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
+
+		OnMaxHealthChanged.Broadcast(AuraAS->GetMaxHealth());
+		OnHealthChanged.Broadcast(AuraAS->GetHealth());
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
