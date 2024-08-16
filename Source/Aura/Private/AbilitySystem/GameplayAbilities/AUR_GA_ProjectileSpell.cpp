@@ -2,6 +2,8 @@
 
 #include "AbilitySystem/GameplayAbilities/AUR_GA_ProjectileSpell.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "Actor/AUR_Projectile.h"
 #include "Interaction/AUR_CombatInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -39,8 +41,11 @@ void UAUR_GA_ProjectileSpell::SpawnProjectile(const FGameplayAbilityActivationIn
 			Cast<APawn>(GetOwningActorFromActorInfo()),
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 
-		//TODO: Give the Projectile a Gameplay Effect Spec for causing Damage.
 
+		const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), SourceASC->MakeEffectContext());
+		Projectile->DamageEffectSpecHandle = SpecHandle;
+		
 		if(Projectile)
 		{
 			Projectile->FinishSpawning(SpawnTransform);
