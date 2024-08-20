@@ -3,6 +3,7 @@
 
 #include "AUR_AttributeSet.h"
 #include "AbilitySystem/AUR_AbilitySystemComponent.h"
+#include "AbilitySystem/AUR_AbilitySystemLibrary.h"
 #include "Aura/Aura.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widgets/AUR_UserWidget.h"
@@ -55,6 +56,12 @@ void AAUR_Enemy::BeginPlay()
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+void AAUR_Enemy::InitializeDefaultAttributes() const
+{
+	UAUR_AbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void AAUR_Enemy::HighlightActor()
 {
 	bIsHighlighted = true;

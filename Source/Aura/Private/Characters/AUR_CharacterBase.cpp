@@ -34,7 +34,8 @@ UAbilitySystemComponent* AAUR_CharacterBase::GetAbilitySystemComponent() const
 void AAUR_CharacterBase::InitAbilityActorInfo()
 {
 	
-}//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 void AAUR_CharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
