@@ -150,6 +150,18 @@ public:
 
 #pragma endregion Vital Attributes
 
+#pragma region Meta Attributes
+
+	/*
+ * Meta Attributes
+ */
+
+	UPROPERTY(BlueprintReadOnly, Category = "Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAUR_AttributeSet, IncomingDamage);
+
+	
+#pragma endregion Meta Attributes
 
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
