@@ -65,6 +65,11 @@ void AAUR_CharacterBase::AddCharacterAbilities() const
 	AuraASC->AddCharacterAbilities(StartupAbilities);
 }
 
+UAnimMontage* AAUR_CharacterBase::GetHitReactMontage_Implementation()
+{
+	return HitReactMontage;
+}
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void AAUR_CharacterBase::BeginPlay()

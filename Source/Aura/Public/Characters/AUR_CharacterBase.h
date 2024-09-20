@@ -65,5 +65,13 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
-#pragma endregion 
+#pragma endregion
+
+#pragma region Combat Interface
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<UAnimMontage> HitReactMontage;
+
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+#pragma endregion Combat Interface
 };

@@ -5,6 +5,9 @@
 #include "UObject/Interface.h"
 #include "AUR_CombatInterface.generated.h"
 
+
+class UAnimMontage;
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI, BlueprintType)
 class UAUR_CombatInterface : public UInterface
@@ -28,4 +31,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void BP_UpdateFacingTarget(const FVector& Target);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UAnimMontage* GetHitReactMontage();
 };
