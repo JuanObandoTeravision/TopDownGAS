@@ -73,5 +73,11 @@ private:
 	TObjectPtr<UAnimMontage> HitReactMontage;
 
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+
+protected:
+	virtual void Die() override;
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 #pragma endregion Combat Interface
 };

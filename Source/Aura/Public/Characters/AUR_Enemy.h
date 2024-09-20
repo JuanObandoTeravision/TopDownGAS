@@ -59,9 +59,15 @@ public:
 	/** Combat Interface */
 	virtual int32 GetPlayerLevel() override;
 	/** end Combat Interface */
+
+	virtual void Die() override;	
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float LifeSpan = 5.f;
 #pragma endregion CombatInterace
 
 #pragma region Attributes
